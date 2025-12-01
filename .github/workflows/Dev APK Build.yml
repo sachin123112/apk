@@ -3,7 +3,7 @@ name: Android APK build for Dev
 on:
   push:
     branches:
-      - devapk
+      - main
 
 permissions:
   contents: write   # required for creating & deleting releases
