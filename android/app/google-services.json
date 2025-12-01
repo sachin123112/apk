@@ -1,0 +1,64 @@
+{
+  "project_info": {
+    "project_number": "976670665707",
+    "project_id": "dev1-365717",
+    "storage_bucket": "dev1-365717.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976670665707:android:048be5572ffd478528c7ae",
+        "android_client_info": {
+          "package_name": "com.kcplchitfund.agent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDI4QsNrqA023mfshKApuziMVxupjR3yDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976670665707-tduih3mg39g8i7rlbdrohe1nk6bfrj2t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.KCPLchitfund"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976670665707:android:cfd58f81ba4f437228c7ae",
+        "android_client_info": {
+          "package_name": "com.kcplchitfunddev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDI4QsNrqA023mfshKApuziMVxupjR3yDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976670665707-tduih3mg39g8i7rlbdrohe1nk6bfrj2t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.KCPLchitfund"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

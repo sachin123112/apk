@@ -1,0 +1,66 @@
+name: Android APK build for Dev
+
+on:
+  push:
+    branches:
+      - devapk
+
+permissions:
+  contents: write   # required for creating & deleting releases
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install npm dependencies
+        run: npm install --force
+
+      - name: Set DATE env
+        run: echo "DATE=$(date +%d%m%Y)" >> $GITHUB_ENV
+
+      - name: Create assets directory
+        run: mkdir -p android/app/src/main/assets
+
+      - name: Bundle Android
+        run: |
+          npx react-native bundle \
+            --platform android \
+            --dev false \
+            --entry-file index.js \
+            --bundle-output android/app/src/main/assets/index.android.bundle \
+            --assets-dest android/app/src/main/res
+
+      - name: Build Android Debug
+        run: |
+          cd android
+          chmod +x ./gradlew
+          ./gradlew clean
+          ./gradlew assembleDebug
+
+      - name: Rename APK with date and dev suffix
+        run: |
+          FILENAME="user${DATE}dev.apk"
+          mv android/app/build/outputs/apk/debug/app-debug.apk android/app/build/outputs/apk/debug/$FILENAME
+          echo "APK_NAME=$FILENAME" >> $GITHUB_ENV
+
+      - name: Upload APK to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ env.DATE }}-devapk
+          name: "Dev APK Build ${{ env.DATE }}"
+          files: android/app/build/outputs/apk/debug/${{ env.APK_NAME }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Delete old devapk releases (keep 5 latest)
+        run: |
+          gh release list --limit 100 --json tagName,createdAt \
+            --jq 'map(select(.tagName | test("-devapk$"))) | sort_by(.createdAt) | reverse | .[5:] | .[].tagName' \
+            | while read tag; do
+              echo "Deleting old devapk release: $tag"
+              gh release delete "$tag" --yes
+            done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
